@@ -1,9 +1,18 @@
+
+import java.awt.HeadlessException;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import util.Constantes;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Familia
@@ -28,17 +37,13 @@ public class Presentador extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
-        jComboBox1 = new javax.swing.JComboBox();
-        jComboBox2 = new javax.swing.JComboBox();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        tematicaPresentador = new javax.swing.JComboBox();
+        complejidadPresentador = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaPresentador = new javax.swing.JTable();
+        consultar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -55,90 +60,70 @@ public class Presentador extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("jLabel1");
+        jCheckBox1.setText("Respuesta correcta");
 
-        jLabel2.setText("jLabel2");
+        tematicaPresentador.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--- Seleccione ---", "historia", "geografia", "matematicas" }));
 
-        jLabel3.setText("jLabel3");
-
-        jLabel4.setText("jLabel4");
-
-        jLabel5.setText("jLabel5");
-
-        jCheckBox1.setText("jCheckBox1");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jList1ValueChanged(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jList1);
+        complejidadPresentador.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--- Seleccione ---", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
         jButton1.setText("SALIR");
+
+        tablaPresentador.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Pregunta", "Rta Correcta", "Rta Incorrecta 1", "Rta Incorrecta 2", "Rta Incorrecta 3", "Complejidad"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaPresentador);
+
+        consultar.setText("Consultar");
+        consultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(376, 376, 376))
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(26, 26, 26))
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGap(40, 40, 40)
+                        .addComponent(tematicaPresentador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(complejidadPresentador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(jCheckBox1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(consultar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel5))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox1)))
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tematicaPresentador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(complejidadPresentador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(consultar)
+                .addGap(4, 4, 4)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -146,9 +131,82 @@ public class Presentador extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jList1ValueChanged
+    private void consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tablaPresentador.getModel();
+
+        String strTematica = tematicaPresentador.getSelectedItem().toString();
+        String strComplejidad = complejidadPresentador.getSelectedItem().toString();
+
+        try {
+            String cadena;
+            File file;
+            FileReader f;
+            BufferedReader b;
+            while (model.getRowCount() > 0) {
+                model.removeRow(0);
+            }
+
+            if (!strTematica.equals("--- Seleccione ---") && strComplejidad.equals("--- Seleccione ---")) {
+                String ruta = Constantes.URL.concat(strTematica).concat(Constantes.EXTENSION_ARCHIVO);
+                file = new File(ruta);
+                if (file.exists()) {
+                    f = new FileReader(ruta);
+                    b = new BufferedReader(f);
+                    while ((cadena = b.readLine()) != null) {
+                        if (!cadena.trim().equals("")) {
+                            String[] pregunta = cadena.split(",");
+                            model.addRow(new Object[]{pregunta[0], pregunta[1], pregunta[2], pregunta[3], pregunta[4], pregunta[5]});
+                        }
+                    }
+                    b.close();
+                    f.close();
+                }
+            } else if (strTematica.equals("--- Seleccione ---") && !strComplejidad.equals("--- Seleccione ---")) {
+                int tamTematica = tematicaPresentador.getItemCount();
+                for (int i = 1; i < tamTematica; i++) {
+                    Object obj = tematicaPresentador.getItemAt(i);
+                    String ruta = Constantes.URL.concat(obj.toString()).concat(Constantes.EXTENSION_ARCHIVO);
+                    file = new File(ruta);
+                    if (file.exists()) {
+                        f = new FileReader(ruta);
+                        b = new BufferedReader(f);
+                        while ((cadena = b.readLine()) != null) {
+                            if (!cadena.trim().equals("")) {
+                                String[] pregunta = cadena.split(",");
+                                if (pregunta[5].trim().equals(strComplejidad)) {
+                                    model.addRow(new Object[]{pregunta[0], pregunta[1], pregunta[2], pregunta[3], pregunta[4], pregunta[5]});
+                                }
+                            }
+                        }
+                        b.close();
+                        f.close();
+                    }
+                }
+            } else if (!strTematica.equals("--- Seleccione ---") && !strComplejidad.equals("--- Seleccione ---")) {
+                String ruta = Constantes.URL.concat(strTematica).concat(Constantes.EXTENSION_ARCHIVO);
+                file = new File(ruta);
+                if (file.exists()) {
+                    f = new FileReader(ruta);
+                    b = new BufferedReader(f);
+                    while ((cadena = b.readLine()) != null) {
+                        if (!cadena.trim().equals("")) {
+                            String[] pregunta = cadena.split(",");
+                            if (pregunta[5].trim().equals(strComplejidad)) {
+                                model.addRow(new Object[]{pregunta[0], pregunta[1], pregunta[2], pregunta[3], pregunta[4], pregunta[5]});
+                            }
+                        }
+                    }
+                    b.close();
+                    f.close();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe escoger almenos un filtro.");
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "No se pudo crear el archivo: "
+                    + strTematica.concat(Constantes.EXTENSION_ARCHIVO) + " porque:" + e.getMessage());
+        }
+    }//GEN-LAST:event_consultarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,18 +244,14 @@ public class Presentador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox complejidadPresentador;
+    private javax.swing.JButton consultar;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaPresentador;
+    private javax.swing.JComboBox tematicaPresentador;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,0 +1,3 @@
+quien descubrio,colon,pedro,pablo,luis,1
+quien pertenecio,carlos,chucho,pablo,luis,2
+quien abrio,santi,eli,felipe,luis,3
